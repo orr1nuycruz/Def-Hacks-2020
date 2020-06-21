@@ -10,7 +10,10 @@ const vision = require('@google-cloud/vision');
 const client = new vision.ImageAnnotatorClient();
 router.get('/:type/:fileName/:token', async function (req, res, next) {
 
-  var url = "https://firebasestorage.googleapis.com/v0/b/devhacks2020-1cf35.appspot.com/o/" + req.params.type + "%2F" + req.params.fileName + "?alt=media&token" + req.params.token;
+  var url = "https://firebasestorage.googleapis.com/v0/b/devhacks2020-1cf35.appspot.com/o/" +
+    req.params.type + "%2F" + req.params.fileName
+    + "?alt=media&token" + req.params.token;
+
   console.log(url + "");
 
   const [result] = await client.textDetection(url)

@@ -1,3 +1,4 @@
+import 'package:devhacks/data/data.dart';
 import 'package:devhacks/model/user.dart';
 import 'package:flutter/material.dart';
 import 'package:linkedin_login/linkedin_login.dart';
@@ -15,6 +16,9 @@ class _ProfileRegistrationState extends State<ProfileRegistration> {
 
   String getAuthEmailUser;
   TextEditingController getProfileName;
+  TextEditingController getFirstName;
+  TextEditingController getLastName;
+  TextEditingController getLocation;
 
   final databaseReference = Firestore.instance;
 
@@ -27,7 +31,13 @@ class _ProfileRegistrationState extends State<ProfileRegistration> {
 
   void createUser() async {
     databaseReference.collection("Users").document(User.email).setData(
-        {"LinkedIn Email": User.email, "Profile Name": User.profileName});
+        {
+          "LinkedIn Email": User.email, 
+          "Profile Name": User.profileName,
+          "First Name" : User.firsName,
+          "Last Name" : User.lastName,
+          "Job Position": User.jobName,
+          "Location": User.location});
   }
 
   @override
@@ -71,7 +81,95 @@ class _ProfileRegistrationState extends State<ProfileRegistration> {
                 ),
               ),
               SizedBox(
-                height: 40,
+                height: 20,
+              ),
+              Flexible(
+                child: TextFormField(
+                  controller: getFirstName,
+                  decoration: InputDecoration(
+                    hintText: "First Name",
+                  ),
+                  validator: (String value) {
+                    if (value.isEmpty) {
+                      return "Cannot be empty";
+                    } else {
+                      setState(() {
+                        User.firsName = value;
+                      });
+                      return null;
+                    }
+                  },
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Flexible(
+                child: TextFormField(
+                  controller: getLastName,
+                  decoration: InputDecoration(
+                    hintText: "Last Name",
+                  ),
+                  validator: (String value) {
+                    if (value.isEmpty) {
+                      return "Cannot be empty";
+                    } else {
+                      setState(() {
+                        User.lastName = value;
+                      });
+                      return null;
+                    }
+                  },
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                color: AppBarTheme.of(context).color,
+                child: DropdownButton(
+                  items: Data.jobPos(),
+                  onChanged: (value) {
+                    if (value != "") {
+                      setState(() {
+                        User.jobName= value;
+                        
+                      });
+                    } else {
+                      return null;
+                    }
+                  },
+                  isExpanded: true,
+                  hint: Text(
+                    User.jobName != null
+                        ? "\t\t" + User.jobName
+                        : "\t\tSelect a reason for Joining",
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+              Flexible(
+                child: TextFormField(
+                  controller: getLocation,
+                  decoration: InputDecoration(
+                    hintText: "City",
+                  ),
+                  validator: (String value) {
+                    if (value.isEmpty) {
+                      return "Cannot be empty";
+                    } else {
+                      setState(() {
+                        User.location = value;
+                      });
+                      return null;
+                    }
+                  },
+                ),
+              ),
+              SizedBox(
+                height: 20,
               ),
               RaisedButton(
                 child: Text(

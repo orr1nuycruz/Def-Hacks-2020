@@ -32,14 +32,14 @@ class _ProfileRegistrationState extends State<ProfileRegistration> {
 
   @override
   void initState() {
-    getAuthEmailString().then((value) => getAuthEmailUser = value);   
+    getAuthEmailString().then((value) => getAuthEmailUser = value);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     User.email = getAuthEmailUser;
-    return  Scaffold(
+    return Scaffold(
       appBar: new AppBar(title: Text('Profile Registration')),
       body: Form(
         key: _formKey,
@@ -49,13 +49,6 @@ class _ProfileRegistrationState extends State<ProfileRegistration> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               new Text(getAuthEmailUser ?? ""),
-              SizedBox(
-                height: 40,
-              ),
-              new RaisedButton(
-                child: Text("data"),
-                onPressed: () => print(getAuthEmailUser),
-              ),
               SizedBox(
                 height: 40,
               ),
@@ -87,6 +80,7 @@ class _ProfileRegistrationState extends State<ProfileRegistration> {
                 ),
                 onPressed: () {
                   if (this._formKey.currentState.validate()) {
+                    Navigator.pop(context);
                     createUser();
                   } else {
                     print("NOT VALID");

@@ -166,7 +166,7 @@ class AuthCodeObject {
 }
 
 class UserObject {
-  String firstName, lastName, email;
+  String firstName, lastName, email, profilePic;
 
-  UserObject({this.firstName, this.lastName, this.email});
+  UserObject({this.firstName, this.lastName, this.email, profilePic});
 }

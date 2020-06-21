@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
         FaceCall.routeName: (context) => FaceCall(),
         ImageToText.routeName: (context) => ImageToText(),
       },
+      debugShowCheckedModeBanner: false,
     );
   }
 }

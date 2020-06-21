@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "273482689880",
+    "firebase_url": "https://devhacks2020-1cf35.firebaseio.com",
+    "project_id": "devhacks2020-1cf35",
+    "storage_bucket": "devhacks2020-1cf35.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:273482689880:android:d50df33ee6e579a47c092d",
+        "android_client_info": {
+          "package_name": "com.example.devhacks"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "273482689880-igoe6519tv4vopqteq1hjeihu1iht97e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnzS_kKkcTfhbT8SS_7cJmWqSQar47Bvk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "273482689880-igoe6519tv4vopqteq1hjeihu1iht97e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

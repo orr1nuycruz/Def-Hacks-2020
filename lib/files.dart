@@ -1,4 +1,6 @@
+import 'package:camera/camera.dart';
 import 'package:devhacks/services/firebase.dart';
+import 'package:devhacks/takePictureScreen.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 
@@ -26,12 +28,11 @@ class _FilesState extends State<Files> {
     try {
       if (fileType == 'image') {
         file = await FilePicker.getFile(type: FileType.IMAGE);
-        setState(() {
-          fileName = p.basename(file.path);
-        });
+        fileName = p.basename(file.path);
         print(fileName);
         FireStorage.uploadFile(file, fileType, fileName);
       }
+
       if (fileType == 'audio') {
         file = await FilePicker.getFile(type: FileType.AUDIO);
         fileName = p.basename(file.path);
@@ -39,7 +40,7 @@ class _FilesState extends State<Files> {
           fileName = p.basename(file.path);
         });
         print(fileName);
-        FireStorage.uploadFile(file, fileType, fileName);
+        // FireStorage.uploadFile(file, fileType, fileName);
       }
       if (fileType == 'video') {
         file = await FilePicker.getFile(type: FileType.VIDEO);
@@ -48,7 +49,7 @@ class _FilesState extends State<Files> {
           fileName = p.basename(file.path);
         });
         print(fileName);
-        FireStorage.uploadFile(file, fileType, fileName);
+        //    FireStorage.uploadFile(file, fileType, fileName);
       }
       if (fileType == 'pdf') {
         file = await FilePicker.getFile(
@@ -58,7 +59,7 @@ class _FilesState extends State<Files> {
           fileName = p.basename(file.path);
         });
         print(fileName);
-        FireStorage.uploadFile(file, fileType, fileName);
+        //     FireStorage.uploadFile(file, fileType, fileName);
       }
       if (fileType == 'others') {
         file = await FilePicker.getFile(type: FileType.ANY);
@@ -67,7 +68,7 @@ class _FilesState extends State<Files> {
           fileName = p.basename(file.path);
         });
         print(fileName);
-        FireStorage.uploadFile(file, fileType, fileName);
+        //      FireStorage.uploadFile(file, fileType, fileName);
       }
     } on PlatformException catch (e) {
       showDialog(
@@ -105,8 +106,21 @@ class _FilesState extends State<Files> {
                 Icons.image,
                 color: Colors.redAccent,
               ),
-              onTap: () {
-                filePicker(context, 'image');
+              onTap: () async {
+                WidgetsFlutterBinding.ensureInitialized();
+
+                // Obtain a list of the available cameras on the device.
+                final cameras = await availableCameras();
+
+                // Get a specific camera from the list of available cameras.
+                final firstCamera = cameras.first;
+                MaterialPageRoute route = MaterialPageRoute(
+                  builder: (context) => TakePictureScreen(
+                    camera: firstCamera,
+                  ),
+                );
+                Navigator.of(context).push(route);
+                // filePicker(context, 'image');
               },
             ),
             ListTile(

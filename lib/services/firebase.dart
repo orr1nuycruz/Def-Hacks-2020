@@ -3,13 +3,6 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class FireStorage {
-  static String fileType = '';
-  static File file;
-  static String fileName = '';
-  static String operationText = '';
-  static bool isUploaded = true;
-  static String result = '';
-
   static Future<void> uploadFile(
       File file, String fileType, String filename) async {
     StorageReference storageReference;

@@ -6,6 +6,7 @@ final String clientId = '86jylux9xiur4s';
 final String clientSecret = 'oVJw4dLtC140h1Im';
 
 class Login extends StatelessWidget {
+  static const routeName = "/login";
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {

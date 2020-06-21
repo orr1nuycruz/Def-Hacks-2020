@@ -1,4 +1,9 @@
+import 'package:devhacks/faceCall.dart';
+import 'package:devhacks/imageToText.dart';
+import 'package:devhacks/screens/login_registration/registration.dart';
 import 'package:flutter/material.dart';
+import 'files.dart';
+import 'home.dart';
 import 'screens/login_registration/login.dart';
 
 void main() {
@@ -15,8 +20,14 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Login(),
+      home: Home(),
+      routes: {
+        Login.routeName: (context) => Login(),
+        Registration.routeName: (context) => Registration(),
+        Files.routeName: (context) => Files(),
+        FaceCall.routeName: (context) => FaceCall(),
+        ImageToText.routeName: (context) => ImageToText(),
+      },
     );
   }
 }
-

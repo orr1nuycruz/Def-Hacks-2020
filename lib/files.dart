@@ -1,10 +1,10 @@
+import 'package:devhacks/services/firebase.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as p;
 
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/services.dart';
 
@@ -20,37 +20,9 @@ class _FilesState extends State<Files> {
   File file;
   String fileName = '';
   String operationText = '';
-  bool isUploaded = true;
   String result = '';
 
-  Future<void> _uploadFile(File file, String filename) async {
-    StorageReference storageReference;
-    if (fileType == 'image') {
-      storageReference =
-          FirebaseStorage.instance.ref().child("images/$filename");
-    }
-    if (fileType == 'audio') {
-      storageReference =
-          FirebaseStorage.instance.ref().child("audio/$filename");
-    }
-    if (fileType == 'video') {
-      storageReference =
-          FirebaseStorage.instance.ref().child("videos/$filename");
-    }
-    if (fileType == 'pdf') {
-      storageReference = FirebaseStorage.instance.ref().child("pdf/$filename");
-    }
-    if (fileType == 'others') {
-      storageReference =
-          FirebaseStorage.instance.ref().child("others/$filename");
-    }
-    final StorageUploadTask uploadTask = storageReference.putFile(file);
-    final StorageTaskSnapshot downloadUrl = (await uploadTask.onComplete);
-    final String url = (await downloadUrl.ref.getDownloadURL());
-    print("URL is $url");
-  }
-
-  Future filePicker(BuildContext context) async {
+  Future filePicker(BuildContext context, String fileType) async {
     try {
       if (fileType == 'image') {
         file = await FilePicker.getFile(type: FileType.IMAGE);
@@ -58,7 +30,7 @@ class _FilesState extends State<Files> {
           fileName = p.basename(file.path);
         });
         print(fileName);
-        _uploadFile(file, fileName);
+        FireStorage.uploadFile(file, fileType, fileName);
       }
       if (fileType == 'audio') {
         file = await FilePicker.getFile(type: FileType.AUDIO);
@@ -67,7 +39,7 @@ class _FilesState extends State<Files> {
           fileName = p.basename(file.path);
         });
         print(fileName);
-        _uploadFile(file, fileName);
+        FireStorage.uploadFile(file, fileType, fileName);
       }
       if (fileType == 'video') {
         file = await FilePicker.getFile(type: FileType.VIDEO);
@@ -76,7 +48,7 @@ class _FilesState extends State<Files> {
           fileName = p.basename(file.path);
         });
         print(fileName);
-        _uploadFile(file, fileName);
+        FireStorage.uploadFile(file, fileType, fileName);
       }
       if (fileType == 'pdf') {
         file = await FilePicker.getFile(
@@ -86,7 +58,7 @@ class _FilesState extends State<Files> {
           fileName = p.basename(file.path);
         });
         print(fileName);
-        _uploadFile(file, fileName);
+        FireStorage.uploadFile(file, fileType, fileName);
       }
       if (fileType == 'others') {
         file = await FilePicker.getFile(type: FileType.ANY);
@@ -95,7 +67,7 @@ class _FilesState extends State<Files> {
           fileName = p.basename(file.path);
         });
         print(fileName);
-        _uploadFile(file, fileName);
+        FireStorage.uploadFile(file, fileType, fileName);
       }
     } on PlatformException catch (e) {
       showDialog(
@@ -134,10 +106,7 @@ class _FilesState extends State<Files> {
                 color: Colors.redAccent,
               ),
               onTap: () {
-                setState(() {
-                  fileType = 'image';
-                });
-                filePicker(context);
+                filePicker(context, 'image');
               },
             ),
             ListTile(
@@ -149,12 +118,7 @@ class _FilesState extends State<Files> {
                 Icons.audiotrack,
                 color: Colors.redAccent,
               ),
-              onTap: () {
-                setState(() {
-                  fileType = 'audio';
-                });
-                filePicker(context);
-              },
+              onTap: () {},
             ),
             ListTile(
               title: Text(
@@ -165,12 +129,7 @@ class _FilesState extends State<Files> {
                 Icons.video_label,
                 color: Colors.redAccent,
               ),
-              onTap: () {
-                setState(() {
-                  fileType = 'video';
-                });
-                filePicker(context);
-              },
+              onTap: () {},
             ),
             ListTile(
               title: Text(
@@ -181,12 +140,7 @@ class _FilesState extends State<Files> {
                 Icons.pages,
                 color: Colors.redAccent,
               ),
-              onTap: () {
-                setState(() {
-                  fileType = 'pdf';
-                });
-                filePicker(context);
-              },
+              onTap: () {},
             ),
             ListTile(
               title: Text(
@@ -197,12 +151,7 @@ class _FilesState extends State<Files> {
                 Icons.attach_file,
                 color: Colors.redAccent,
               ),
-              onTap: () {
-                setState(() {
-                  fileType = 'others';
-                });
-                filePicker(context);
-              },
+              onTap: () {},
             ),
             SizedBox(
               height: 50,

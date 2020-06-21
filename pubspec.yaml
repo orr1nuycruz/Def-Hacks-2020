@@ -31,7 +31,9 @@ dependencies:
   linkedin_login: ^1.1.5
   file_picker: 1.4.3+1
   firebase_storage: 3.0.8
-
+  camera:
+  path_provider:
+  path:
 dev_dependencies:
   flutter_test:
     sdk: flutter

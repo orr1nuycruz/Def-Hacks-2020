@@ -37,7 +37,8 @@ class _ProfileRegistrationState extends State<ProfileRegistration> {
           "First Name" : User.firsName,
           "Last Name" : User.lastName,
           "Job Position": User.jobName,
-          "Location": User.location});
+          "Location": User.location
+        });
   }
 
   @override

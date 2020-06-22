@@ -12,6 +12,7 @@ final String clientId = '86jylux9xiur4s';
 final String clientSecret = 'oVJw4dLtC140h1Im';
 
 class Login extends StatelessWidget {
+  static const routeName = "/login";
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -23,24 +24,20 @@ class Login extends StatelessWidget {
       home: DefaultTabController(
         length: 2,
         child: Scaffold(
-          appBar: AppBar(
-            
-            title: Text('LinkedIn Authorization'),
-          ),
-          body:LinkedInProfileExamplePage(),
+          body: LinkedInLogin(),
         ),
       ),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
 
-class LinkedInProfileExamplePage extends StatefulWidget {
+class LinkedInLogin extends StatefulWidget {
   @override
-  State createState() => _LinkedInProfileExamplePageState();
+  State createState() => _LinkedInLoginState();
 }
 
-class _LinkedInProfileExamplePageState
-    extends State<LinkedInProfileExamplePage> {
+class _LinkedInLoginState extends State<LinkedInLogin> {
   UserObject user;
   bool logoutUser = false;
   String getAuthEmailString = "";
@@ -70,14 +67,20 @@ class _LinkedInProfileExamplePageState
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return Container(
+      width: 500,
+      color: Color(0xff092C66),
       child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
           children: <Widget>[
-            LinkedInButtonStandardWidget(
-              onTap: () {
+            Text(
+              'Login',
+              style: TextStyle(fontSize: 50, color: Colors.white),
+            ),
+            RaisedButton(
+              elevation: 5.0,
+              onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -117,7 +120,7 @@ class _LinkedInProfileExamplePageState
                         } else {
                           Navigator.pop(context);
                           MaterialPageRoute route = MaterialPageRoute(
-                              builder: (context) =>HomeFeed());
+                              builder: (context) => HomeFeed());
                           Navigator.of(context).push(route);
                         }
                       },
@@ -131,26 +134,19 @@ class _LinkedInProfileExamplePageState
                   ),
                 );
               },
-            ),
-            LinkedInButtonStandardWidget(
-              onTap: () {
-                setState(() {
-                  user = null;
-                  logoutUser = true;
-                  getAuthEmailString = "";
-                });
-              },
-              buttonText: 'Logout',
-            ),
-            Container(
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text('First: ${user?.firstName} '),
-                  Text('Last: ${user?.lastName} '),
-                  Text('Email: ' + getAuthEmailString),
-                ],
+              padding: EdgeInsets.all(15.0),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              color: Color(0xff007AB6),
+              child: Text(
+                '  Login With Linkedin ',
+                style: TextStyle(
+                  color: Colors.white,
+                  letterSpacing: 1.5,
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ]),
@@ -158,7 +154,82 @@ class _LinkedInProfileExamplePageState
   }
 }
 
+/*
+class LinkedInAuthCodeExamplePage extends StatefulWidget {
+  @override
+  State createState() => _LinkedInAuthCodeExamplePageState();
+}
 
+class _LinkedInAuthCodeExamplePageState
+    extends State<LinkedInAuthCodeExamplePage> {
+  AuthCodeObject authorizationCode;
+  bool logoutUser = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisSize: MainAxisSize.max,
+      children: <Widget>[
+        LinkedInButtonStandardWidget(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (BuildContext context) => LinkedInAuthCodeWidget(
+                  destroySession: logoutUser,
+                  redirectUrl: redirectUrl,
+                  clientId: clientId,
+                  onGetAuthCode: (AuthorizationCodeResponse response) {
+                    print('Auth code ${response.code}');
+
+                    print('State: ${response.state}');
+
+                    authorizationCode = AuthCodeObject(
+                      code: response.code,
+                      state: response.state,
+                    );
+                    setState(() {});
+
+                    Navigator.pop(context);
+                  },
+                  catchError: (LinkedInErrorObject error) {
+                    print('Error description: ${error.description},'
+                        ' Error code: ${error.statusCode.toString()}');
+                    Navigator.pop(context);
+                  },
+                ),
+                fullscreenDialog: true,
+              ),
+            );
+          },
+        ),
+        LinkedInButtonStandardWidget(
+          onTap: () {
+            setState(() {
+              authorizationCode = null;
+              logoutUser = true;
+            });
+          },
+          buttonText: 'Logout user',
+        ),
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text('Auth code: ${authorizationCode?.code} '),
+              Text('State: ${authorizationCode?.state} '),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+*/
 class AuthCodeObject {
   String code, state;
 
